@@ -40,19 +40,18 @@ type UserInfo struct {
 }
 
 type NameArr struct {
-	Patoks   []Reporters `json:"name" binding:"required"`
+	Patoks []Reporters `json:"name" binding:"required"`
 }
 
-
 type Meeting struct {
-	Date     time.Time            `json:"date"`
-	Area     string               `json:"area"`
-	Reporters   []Reporters `json:"reporters" binding:"required"`
+	Date      time.Time   `json:"date"`
+	Area      string      `json:"area"`
+	Reporters []Reporters `json:"reporters" binding:"required"`
 }
 
 type Reporters struct {
-	Name   string `json:"name" binding:"required"`
-	Age  int `json:"age" binding:"required"`
+	Name string `json:"name" binding:"required"`
+	Age  int    `json:"age" binding:"required"`
 }
 
 /*
@@ -70,19 +69,70 @@ type Reporters struct {
             "age": 78
         }
     ]
-} 
+}
 
 */
 func handleMeeting(c *gin.Context) {
-	
-    var request Meeting
-    if err := c.ShouldBindJSON(&request); err != nil {
-       // c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
-        return
-    }
-	fmt.Println("request=",request)
-  //  c.JSON(http.StatusOK, utils.Response("success"))
+
+	var request Meeting
+	if err := c.ShouldBindJSON(&request); err != nil {
+		// c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
+		return
+	}
+	fmt.Println("request=", request)
+	//  c.JSON(http.StatusOK, utils.Response("success"))
 }
+
+type Rpts struct {
+	Reporters []Reporters `json:"reporters"`
+}
+
+/*
+
+{
+    "reporters": [
+        {
+            "name":"jack",
+            "age": 12
+        },
+        {
+            "name":"rick",
+            "age": 78
+        }
+    ]
+} 
+
+*/
+
+func handleRpts(c *gin.Context) {
+
+	var request Rpts
+	if err := c.ShouldBindJSON(&request); err != nil {
+		// c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
+		return
+	}
+	fmt.Println("request=", request)
+	//  c.JSON(http.StatusOK, utils.Response("success"))
+}
+
+type Writers struct {
+	Writers []Reporters
+}
+func handleWriters(c *gin.Context) {
+
+	var request []Reporters
+	
+	bodyByts, _ := ioutil.ReadAll(c.Request.Body)
+	fmt.Println("raw_data=", string(bodyByts)) // 获取到原生态的请求数据
+
+	if err := c.ShouldBindJSON(&request); err != nil {
+		// c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
+		return
+	}
+	fmt.Println("request=", request)
+	//  c.JSON(http.StatusOK, utils.Response("success"))
+}
+
 
 // CreateTeast 创建测试用户
 func PostUser(c *gin.Context) {
@@ -183,7 +233,9 @@ func RouterWithGroup() {
 	{
 		v1.POST("/users", handleMeeting)
 
-		v1.GET("/users", GetUsers)
+		v1.GET("/rpts", handleRpts)
+		v1.GET("/writers", handleWriters)
+
 		v1.GET("/users/:id", GetUser)
 		v1.PUT("/users/:id", UpdateUser)
 		v1.DELETE("/users/:id", DeleteUser)
@@ -191,6 +243,16 @@ func RouterWithGroup() {
 
 	r.Run(":8080")
 }
+
+type Transport struct {
+	Time  string
+	MAC   string
+	Id    string
+	Rssid string
+}
+
 func main() {
 	RouterWithGroup()
+
+
 }
