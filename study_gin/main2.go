@@ -100,7 +100,7 @@ type Rpts struct {
             "age": 78
         }
     ]
-} 
+}
 
 */
 
@@ -118,10 +118,11 @@ func handleRpts(c *gin.Context) {
 type Writers struct {
 	Writers []Reporters
 }
+
 func handleWriters(c *gin.Context) {
 
 	var request []Reporters
-	
+
 	bodyByts, _ := ioutil.ReadAll(c.Request.Body)
 	fmt.Println("raw_data=", string(bodyByts)) // 获取到原生态的请求数据
 
@@ -132,7 +133,6 @@ func handleWriters(c *gin.Context) {
 	fmt.Println("request=", request)
 	//  c.JSON(http.StatusOK, utils.Response("success"))
 }
-
 
 // CreateTeast 创建测试用户
 func PostUser(c *gin.Context) {
@@ -185,6 +185,8 @@ func GetUsers(c *gin.Context) { // http://127.0.0.1:8080/api/v1/users
 func GetUser(c *gin.Context) {
 	id := c.Params.ByName("id")
 	user_id, _ := strconv.ParseInt(id, 0, 64)
+	name := c.Params.ByName("name")
+	fmt.Println("name=", name)
 
 	if user_id == 1 {
 		content := gin.H{"id": user_id, "firstname": "Oliver", "lastname": "Queen"}
@@ -234,10 +236,10 @@ func RouterWithGroup() {
 		v1.POST("/users", handleMeeting)
 
 		v1.GET("/rpts", handleRpts)
-		v1.GET("/writers", handleWriters)
+		//v1.GET("/writers", handleWriters)  // 这个没有调通， 等下次调通再说
 
-		v1.GET("/users/:id", GetUser)
-		v1.PUT("/users/:id", UpdateUser)
+		v1.GET("/users/:id", GetUser)       // http://127.0.0.1:8080/api/v1/users/22    22就是id值
+		v1.GET("/users/:id/:name", GetUser) // http://127.0.0.1:8080/api/v1/users/22/jack    22就是id,jack就是name
 		v1.DELETE("/users/:id", DeleteUser)
 	}
 
@@ -253,6 +255,5 @@ type Transport struct {
 
 func main() {
 	RouterWithGroup()
-
 
 }
