@@ -3,8 +3,11 @@ package main
 import (
 	//"net/http"
 
+	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -15,10 +18,93 @@ type Users struct {
 	Lastname  string `gorm:"not null" form:"lastname" json:"lastname"`
 }
 
-func PostUser(c *gin.Context) {
-	// The futur code…
-	fmt.Println("Post_User")
+type TestUser struct {
+	PassWord string `json:"password" binding:"required"` // 密码
+	Mobile   string `json:"mobile" binding:"required"`   // 电话
+	NickName string `json:"nick_name"`                   // 昵称
+	Icon     string `json:"icon"`                        // 头像
 }
+
+type NameArr9 struct {
+	Name string `json:"name"`
+}
+
+type UsersInfo struct {
+	Id    string          `gorm:"column:id" json:"id"`                 //
+	Users json.RawMessage `gorm:"column:users;type:json" json:"users"` //
+}
+
+type UserInfo struct {
+	UserId string `gorm:"column:userid" json:"userid"` //
+	Remark string `json:"remark"`
+}
+
+type NameArr struct {
+	Patoks   []Reporters `json:"name" binding:"required"`
+}
+
+
+type Meeting struct {
+	Date     time.Time            `json:"date"`
+	Area     string               `json:"area"`
+	Reporters   []Reporters `json:"reporters" binding:"required"`
+}
+
+type Reporters struct {
+	Name   string `json:"name" binding:"required"`
+	Age  int `json:"age" binding:"required"`
+}
+
+/*
+
+{
+    "date": "2020-01-29T14:47:43.511Z",
+    "area": "Hongkong",
+    "reporters": [
+        {
+            "name":"jack",
+            "age": 12
+        },
+        {
+            "name":"rick",
+            "age": 78
+        }
+    ]
+} 
+
+*/
+func handleMeeting(c *gin.Context) {
+	
+    var request Meeting
+    if err := c.ShouldBindJSON(&request); err != nil {
+       // c.JSON(http.StatusBadRequest, utils.ErrorResponse(err))
+        return
+    }
+	fmt.Println("request=",request)
+  //  c.JSON(http.StatusOK, utils.Response("success"))
+}
+
+// CreateTeast 创建测试用户
+func PostUser(c *gin.Context) {
+	var postData []NameArr
+
+	bodyByts, _ := ioutil.ReadAll(c.Request.Body)
+	fmt.Println("raw_data=", string(bodyByts)) // 获取到原生态的请求数据
+
+	fmt.Println("postData=", postData)
+
+	if err := c.ShouldBindJSON(&postData); err != nil {
+		fmt.Println("err=", err)
+		// response.ReturnJSON(c, http.StatusOK, statuscode.InvalidParam.Code,statuscode.InvalidParam.Msg, nil)
+		return
+	}
+	// 走到这里，postData 里面就有数据了
+}
+
+// func PostUser(c *gin.Context) {
+// 	// The futur code…
+// 	fmt.Println("Post_User")
+// }
 
 type MsgJson struct {
 	Msg string `json:"msg"`
@@ -28,6 +114,9 @@ func GetUsers(c *gin.Context) { // http://127.0.0.1:8080/api/v1/users
 	fmt.Println("----------------get_user-----------")
 
 	//lastname := c.Query("lastname")
+
+	bodyByts, _ := ioutil.ReadAll(c.Request.Body)
+	fmt.Println("raw_data=", string(bodyByts)) // 获取到原生态的请求数据
 
 	lastname := c.Query("lastname")
 	firstname := c.Query("firstname")
@@ -92,8 +181,9 @@ func RouterWithGroup() {
 
 	v1 := r.Group("/api/v1") //不带任何分组路径，比如 http://127.0.0.1:8080/users
 	{
+		v1.POST("/users", handleMeeting)
+
 		v1.GET("/users", GetUsers)
-		v1.POST("/users", PostUser)
 		v1.GET("/users/:id", GetUser)
 		v1.PUT("/users/:id", UpdateUser)
 		v1.DELETE("/users/:id", DeleteUser)
@@ -101,6 +191,6 @@ func RouterWithGroup() {
 
 	r.Run(":8080")
 }
-func main8() {
+func main() {
 	RouterWithGroup()
 }

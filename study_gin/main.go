@@ -106,6 +106,6 @@ func getRawData() {
 	})
 	r.Run(":8080")
 }
-func main() {
+func main2() {
 	LoginAccep()
 }
