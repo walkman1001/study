@@ -7,19 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func HelloWord() { // 不带路径
-	//请求参数  http://127.0.0.1:8080/    或者    http://127.0.0.1:8080
 
-	fmt.Println("helloword")
-	//1.创建路由
-	r := gin.Default()
-	//2.绑定路由规则，执行的函数
-	r.GET("/", func(context *gin.Context) {
-		context.String(http.StatusOK, "Hello World!")
-	})
-	//3.监听端口，默认8080
-	r.Run(":8080")
-}
 
 func getPing(c *gin.Context) {
 	//输出json结果给调用方, 200 表示请求成功
@@ -77,3 +65,4 @@ func Router() {
 
 	r.Run(":8080")
 }
+
