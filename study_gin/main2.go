@@ -5,9 +5,6 @@ import (
 )
 
 func main() {
-	//RouterWithGroup()
-	api.
 	api.RouterWithGroup()
-	api.HelloWord()
 
 }
