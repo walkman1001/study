@@ -2,11 +2,11 @@ package main
 
 import (
 	//"net/http"
-
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"strconv"
+	"study_gin/api"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -254,6 +254,7 @@ type Transport struct {
 }
 
 func main() {
-	RouterWithGroup()
+	//RouterWithGroup()
+	api.Router()
 
 }

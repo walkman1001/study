@@ -8,41 +8,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func HelloWord() { // 不带路径
-	//1.创建路由
-	r := gin.Default()
-	//2.绑定路由规则，执行的函数
-	r.GET("/", func(context *gin.Context) {
-		context.String(http.StatusOK, "Hello World!")
-	})
-	//3.监听端口，默认8080
-	r.Run(":8080")
-}
 
-func getPing(c *gin.Context) {
-	//输出json结果给调用方, 200 表示请求成功
-	c.JSON(200, gin.H{
-		"message": "pong8",
-	})
-}
 
-func router() { //带简单路径
 
-	r := gin.Default()
-	r.GET("/ping", getPing)
-
-	r.Run(":8080")
-}
-
-func restful() {
-	r := gin.Default()
-
-	r.GET("/user/:name", func(c *gin.Context) {
-		name := c.Param("name")
-		c.String(http.StatusOK, "---Hello %s", name)
-	})
-	r.Run(":8080")
-}
 
 func getParameters() {
 	router2 := gin.Default() // http://127.0.0.1:8080/welcome?firstname=Jane&lastname=Doe
