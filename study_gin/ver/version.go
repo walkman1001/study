@@ -6,4 +6,5 @@ import (
 
 func GetVer() {
 	fmt.Println("dddd")
+	fmt.Println("abc")
 }
