@@ -1,0 +1,14 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [       
+        {
+            "name": "launch", //这个launch 可以随便改任意值，只是在启动项会看到一个名字
+            "type": "go", // 这个应该告诉vscode 启用是哪个语言吧
+            "request": "launch", //请求类型为启动 还要这个是  "request": "attach"， //请求类型为附加
+            "program": "${workspaceFolder}", //这个应该是哪个文件夹启动，应该是执行文件的目录
+        }
+    ]
+}

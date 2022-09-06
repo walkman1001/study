@@ -7,6 +7,7 @@ import (
 
 func main() {
 	fmt.Println("fmt")
+	fmt.Println("git_to_commit")
 	api.RouterWithGroup()
 
 }
