@@ -6,7 +6,7 @@ import (
 	"fmt"
 )
 
-type Block struct {  
+type SimpleBlock struct {  
     Data          string  
     Hash          string  
     PrevBlockHash string  
@@ -19,13 +19,13 @@ func Sha256(src string) string {
     return res  
 }
 
-func InitBlock(data string) *Block {  
-    block := &Block{data, Sha256(data), ""}  
+func InitBlock(data string) *SimpleBlock {  
+    block := &SimpleBlock{data, Sha256(data), ""}  
 
     return block  
 }
-func NodeBlock(data string, prevhash string) *Block {  
-    block := &Block{data, Sha256(data), prevhash}  
+func NodeBlock(data string, prevhash string) *SimpleBlock {  
+    block := &SimpleBlock{data, Sha256(data), prevhash}  
 
     return block  
 }
@@ -37,7 +37,7 @@ func simplechain() {
 
     fmt.Println(newblock)  
 
-    blockchain := []*Block{}  
+    blockchain := []*SimpleBlock{}  
 
     blockchain = append(blockchain, newblock)  
 
