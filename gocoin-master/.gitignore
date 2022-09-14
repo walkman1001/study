@@ -1,0 +1,9 @@
+*.exe
+*.bin
+*.dat
+*.a
+client/sipadll.go
+client/sipasec.go
+client/openssl.go
+.DS_Store
+.vscode

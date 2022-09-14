@@ -1,0 +1,8 @@
+*.txt
+balance/
+client
+*.conf
+.stealth
+*.bat
+ssl_cert/*.crt
+ssl_cert/*.key
