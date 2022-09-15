@@ -2,7 +2,6 @@ package main
 
 import (
 	"blockchain/CLI"
-	"blockchain/sample"
 )
 
 /*
@@ -18,7 +17,7 @@ func main() {
 	//cryptoSample()
 	//base64Sample()
 	//base58aSample()
-	sample.Base58bSample()
+	//sample.Base58bSample()
 	cli := CLI.CLI{}
 	cli.Run()
 }

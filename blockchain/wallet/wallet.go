@@ -140,6 +140,7 @@ func (ws Wallets) GetWallet(address string) Wallet {
 
 // 从文件中加载钱包s
 func (ws *Wallets) LoadFromFile() error {
+	//walletFile := fmt.Sprintf(walletFile, "nodeID") 
 	if _, err := os.Stat(walletFile); os.IsNotExist(err) {
 		return err
 	}

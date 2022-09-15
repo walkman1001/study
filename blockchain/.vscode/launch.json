@@ -9,6 +9,9 @@
             "type": "go", // 这个应该告诉vscode 启用是哪个语言吧
             "request": "launch", //请求类型为启动 还要这个是  "request": "attach"， //请求类型为附加
             "program": "${workspaceFolder}", //这个应该是哪个文件夹启动，应该是执行文件的目录
+            "args":[
+                "createwallet"
+            ]
         }
     ]
 }
